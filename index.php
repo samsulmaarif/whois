@@ -33,12 +33,12 @@ $out = str_replace('{self}', $_SERVER['PHP_SELF'], $out);
 
 $resout = extract_block($out, 'results');
 
-if (isSet($_GET['query']))
+if (isSet($_POST['query']))
 	{
-	$query = $_GET['query'];
+	$query = $_POST['query'];
 
-	if (!empty($_GET['output']))
-		$output = $_GET['output'];
+	if (!empty($_POST['output']))
+		$output = $_POST['output'];
 	else
 		$output = '';
 
@@ -51,7 +51,7 @@ if (isSet($_GET['query']))
 	$allowproxy = false;
 
  	// get faster but less acurate results
- 	$whois->deep_whois = empty($_GET['fast']);
+ 	$whois->deep_whois = empty($_POST['fast']);
  	
  	// To use special whois servers (see README)
 	//$whois->UseServer('uk','whois.nic.uk:1043?{hname} {ip} {query}');
