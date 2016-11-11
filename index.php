@@ -37,6 +37,24 @@ if (isSet($_POST['query']))
 	{
 	$query = $_POST['query'];
 
+	// reCaptcha Code start here
+	if(isset($_POST['g-recaptcha-response'])){
+          $captcha=$_POST['g-recaptcha-response'];
+        }
+        if(!$captcha){
+          echo '<h2>Please check the the captcha form.</h2>';
+          exit;
+        }
+        $secretKey = "6LfUvgsUAAAAAEi4Ef3sYSS8MZPlABorcmS-nDWU";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+        $responseKeys = json_decode($response,true);
+        if(intval($responseKeys["success"]) !== 1) {
+          echo '<h2>tantangan captcha gagal dipecahkan</h2>';
+        }
+	// reCaptcha Code stop here
+
+
 	if (!empty($_POST['output']))
 		$output = $_POST['output'];
 	else
@@ -107,26 +125,7 @@ if (isSet($_POST['query']))
 				$winfo = implode($whois->Query['errstr'],"\n<br></br>");
 				}
 		}
-
-	// reCaptcha Code start here
-	if(isset($_POST['g-recaptcha-response'])){
-          $captcha=$_POST['g-recaptcha-response'];
-        }
-        if(!$captcha){
-          echo '<h2>Please check the the captcha form.</h2>';
-          exit;
-        }
-        $secretKey = "6LfUvgsUAAAAAEi4Ef3sYSS8MZPlABorcmS-nDWU";
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-        $responseKeys = json_decode($response,true);
-        if(intval($responseKeys["success"]) !== 1) {
-          echo '<h2>tantangan captcha gagal dipecahkan</h2>';
-        } else {
-          $resout = str_replace('{result}', $winfo, $resout);
-        }
-	// reCaptcha Code stop here
-
+    $resout = str_replace('{result}', $winfo, $resout);
 	}
 
 
