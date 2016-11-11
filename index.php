@@ -37,7 +37,7 @@ if (isSet($_POST['query']))
 	{
 	$query = $_POST['query'];
 
-	// reCaptcha Code start here
+	/* reCaptcha Code start here
 	if(isset($_POST['g-recaptcha-response'])){
           $captcha=$_POST['g-recaptcha-response'];
         }
@@ -53,7 +53,7 @@ if (isSet($_POST['query']))
           echo '<h2>tantangan captcha gagal dipecahkan</h2>';
         }
 	// reCaptcha Code stop here
-
+    */
 
 	if (!empty($_POST['output']))
 		$output = $_POST['output'];
