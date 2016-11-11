@@ -39,25 +39,6 @@ if (isSet($_GET['query']))
 
 	if (!empty($_GET['output']))
 		$output = $_GET['output'];
-
-	// reCaptcha Code start here
-	if(isset($_POST['g-recaptcha-response'])){
-          $captcha=$_POST['g-recaptcha-response'];
-        }
-        if(!$captcha){
-          echo '<h2>Please check the the captcha form.</h2>';
-          exit;
-        }
-        $secretKey = "6LfUvgsUAAAAAEi4Ef3sYSS8MZPlABorcmS-nDWU";
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-        $responseKeys = json_decode($response,true);
-        if(intval($responseKeys["success"]) !== 1) {
-          echo '<h2>You are spammer ! Get the @$%K out</h2>';
-        } else {
-          echo '<h2>Thanks for posting comment.</h2>';
-        }
-	// reCaptcha Code stop here
 	else
 		$output = '';
 
@@ -127,8 +108,27 @@ if (isSet($_GET['query']))
 				}
 		}
 
-	$resout = str_replace('{result}', $winfo, $resout);
+	// reCaptcha Code start here
+	if(isset($_POST['g-recaptcha-response'])){
+          $captcha=$_POST['g-recaptcha-response'];
+        }
+        if(!$captcha){
+          echo '<h2>Please check the the captcha form.</h2>';
+          exit;
+        }
+        $secretKey = "6LfUvgsUAAAAAEi4Ef3sYSS8MZPlABorcmS-nDWU";
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+        $responseKeys = json_decode($response,true);
+        if(intval($responseKeys["success"]) !== 1) {
+          echo '<h2>tantangan captcha gagal dipecahkan</h2>';
+        } else {
+          $resout = str_replace('{result}', $winfo, $resout);
+        }
+	// reCaptcha Code stop here
+
 	}
+
 
 else
 	$resout = '';
