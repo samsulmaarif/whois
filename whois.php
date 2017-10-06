@@ -46,7 +46,7 @@ if (isSet($_POST['query']))
           echo '<h2>Please check the the captcha form.</h2>';
           exit;
         }
-        $secretKey = "6LfUvgsUAAAAAEi4Ef3sYSS8MZPlABorcmS-nDWU";
+        $secretKey = "";
         $ip = $_SERVER['REMOTE_ADDR'];
         $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
         $responseKeys = json_decode($response,true);
